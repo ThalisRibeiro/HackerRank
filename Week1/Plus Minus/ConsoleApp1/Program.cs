@@ -48,12 +48,16 @@ class Result
         }
         for (int i = 0; i < 3; i++)
         {
-            proportions[i] = ((decimal)elements[i] /(decimal)arrCount);
-            //Console.WriteLine($"{Decimal.Round(proportions[i],6)}");
-            saida = proportions[i].ToString("#.#####");
+            if (elements[i] == 0)
+            {
+                proportions[i] = 0M;
+            }
+            else
+            {
+                proportions[i] = ((decimal)elements[i] / (decimal)arrCount);
+            }//Console.WriteLine($"{Decimal.Round(proportions[i],6)}");
+            saida = proportions[i].ToString("0.000000");
             Console.WriteLine($"{saida}");
-
-
         }
     }
 
