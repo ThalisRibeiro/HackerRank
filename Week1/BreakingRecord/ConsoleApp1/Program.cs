@@ -1,18 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
-using System.Text;
-using System;
-
-class Result
+﻿class Result
 {
 
     /*
@@ -31,10 +17,12 @@ class Result
             if (scores[i] > recordsbroke[0])
             {
                 recordsbroke[0] = scores[i];
+                recordsbroke[0] += 1;
             }
-            if (scores[i]< recordsbroke[1])
+            if (scores[i] < recordsbroke[1])
             {
                 recordsbroke[1] = scores[i];
+                recordsbroke[1] += 1;
             }
         }
 
