@@ -9,44 +9,49 @@ class Solution
     {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
         var entrada = Console.ReadLine();
+        string saida="";
         var lista = new string[3];
         lista = entrada.Split(";");
         switch (lista[0])
         {
-            case "C": Combine(lista);
+            case "C": //Combine(lista);
+                saida = CombineMethod(lista[2].Split(" "), lista[1]);
+                break;
+            case "S":
+                saida = Split(lista[2], lista[1]);
                 break;
             default:
                 break;
         }
-        
-        Console.WriteLine($"0 {lista[0]} 1{lista[1]} 2 {lista[2]}");
+        Console.WriteLine(saida);
+       // Console.WriteLine($"0 {lista[0]} 1{lista[1]} 2 {lista[2]}");
     }
 
-    private static void Combine(string[] lista)
+    private static string Split(string palavra, string letra)
     {
-        string saida = "";
-        switch (lista[1])
+        if(letra == "M")
+            palavra = palavra.Remove(palavra.Length - 2, 2);
+        int i = 0;
+        do
         {
-            case "M":
-                lista = lista[2].Split(" ");
-                saida = CombineMethod(lista,"M");
-                Console.WriteLine($"Combine Method: {saida}");
-                break;
-            case "V":
-                lista = lista[2].Split(" ");
-                saida = CombineMethod(lista, "V");
-                Console.WriteLine($"Combine V: {saida}");
-                break;
-            case "C":
+            if (VerificaIgualdade(palavra[i].ToString()))
+            {
+                palavra=palavra.Insert(i, palavra[i].ToString());   
+                palavra=palavra.Remove(i+1, 1);
+                palavra = palavra.Insert(i, " ");
+                i += 1;
+            }
+            i += 1;
 
-                lista = lista[2].Split(" ");
-                saida = CombineMethod(lista, "C");
-                Console.WriteLine($"Combine C: {saida}");
-                break;
-            default:
-                break;
-        }
-        
+        } while (i <palavra.Length);
+        palavra = palavra.TrimStart();
+        return palavra;
+    }
+    private static bool VerificaIgualdade(string letra)
+    {
+        if(letra == letra.ToUpper())
+            return true;
+        return false;
     }
     private static string CombineMethod(string[] lista, string letra)
     {
