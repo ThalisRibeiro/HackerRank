@@ -8,48 +8,63 @@ class Solution
     static void Main(String[] args)
     {
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
-        var entrada = Console.ReadLine();
-        string saida="";
-        var lista = new string[3];
-        lista = entrada.Split(";");
-        switch (lista[0])
+        var sr = new StreamReader(Console.OpenStandardInput());
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+        var entrada = sr.ReadToEnd();
+        string saida = "";
+        var frases = new List<string>();
+        var dados = new List<string>();
+
+        frases = entrada.Split("\n").Where(x => x != "").ToList();
+
+        for (int i = 0; i < frases.Count(); i++)
         {
-            case "C": //Combine(lista);
-                saida = CombineMethod(lista[2].Split(" "), lista[1]);
-                break;
-            case "S":
-                saida = Split(lista[2], lista[1]);
-                break;
-            default:
-                break;
+            if(i>0)
+            saida = $"{saida}\n";
+            //Console.WriteLine($"frase {i}: {lista[i]} ");
+            dados = frases[i].Split(";").ToList();
+            switch (dados[0])
+            {
+                case "C":
+                    saida += CombineMethod(dados[2].Split(" "), dados[1]);
+                    break;
+                case "S":
+                    saida += Split(dados[2], dados[1]);
+                    break;
+                default:
+                    break;
+            }
         }
-        Console.WriteLine(saida);
-       // Console.WriteLine($"0 {lista[0]} 1{lista[1]} 2 {lista[2]}");
+
+        textWriter.WriteLine(saida);
+
+        textWriter.Flush();
+        textWriter.Close();
     }
 
     private static string Split(string palavra, string letra)
     {
-        if(letra == "M")
+        if (letra == "M")
             palavra = palavra.Remove(palavra.Length - 2, 2);
         int i = 0;
         do
         {
             if (VerificaIgualdade(palavra[i].ToString()))
             {
-                palavra=palavra.Insert(i, palavra[i].ToString());   
-                palavra=palavra.Remove(i+1, 1);
+                palavra = palavra.Insert(i, palavra[i].ToString().ToLower());
+                palavra = palavra.Remove(i + 1, 1);
                 palavra = palavra.Insert(i, " ");
                 i += 1;
             }
             i += 1;
-
-        } while (i <palavra.Length);
+        } while (i < palavra.Length);
         palavra = palavra.TrimStart();
+        Console.WriteLine(palavra);
         return palavra;
     }
     private static bool VerificaIgualdade(string letra)
     {
-        if(letra == letra.ToUpper())
+        if (letra == letra.ToUpper())
             return true;
         return false;
     }
@@ -61,19 +76,20 @@ class Solution
             switch (i)
             {
                 case 0:
-                    if(letra=="C")
+                    if (letra == "C")
                         lista[i] = PrimeiraLetraUpper(lista, i);
                     else
-                    lista[i] = lista[i].ToLower();
+                        lista[i] = lista[i].ToLower();
                     break;
                 default:
-                    lista[i]= PrimeiraLetraUpper(lista, i);
+                    lista[i] = PrimeiraLetraUpper(lista, i);
                     break;
             }
             saida += $"{lista[i]}";
         }
-        if(letra=="M")
-        saida = saida.Insert(saida.Length, "()");
+        if (letra == "M")
+            saida = saida.Insert(saida.Length, "()");
+        Console.WriteLine(saida.TrimEnd());
         return saida;
     }
 
